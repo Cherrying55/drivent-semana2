@@ -13,11 +13,11 @@ export async function getTicketsTypesservice(){
 }
 
 export async function getTicketbyUserId(id:number){
-  const enroll = enrollmentRepository.findWithAddressByUserId(id);
+  const enroll = await enrollmentRepository.findWithAddressByUserId(id);
   if(!enroll){
     throw(notFoundError())
   };
-  const ticket = await getTicketbyEnrollId(id);
+  const ticket = await getTicketbyEnrollId(enroll.id);
   if(!ticket){
     throw(notFoundError())
   }
