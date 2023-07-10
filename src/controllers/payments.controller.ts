@@ -17,7 +17,7 @@ export async function getPaymentsbyTicketId(req:AuthenticatedRequest, res: Respo
     try{const payment = await get(idUser, idTicket);
     if (!payment) 
     {return res.sendStatus(httpStatus.NOT_FOUND);}
-    return res.send(payment).status(200);
+    return res.status(httpStatus.OK).send(payment);
 }
 
     catch(e){
