@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { getTickeyById } from "@/services/tickets.service";
 import { getPaymentsbyTicketId as get} from "@/services/payments.service";
 import httpStatus from "http-status";
 import { postPaymentProcess as post } from "@/services/payments.service";
 import { AuthenticatedRequest } from "@/middlewares";
 
-export async function getPaymentsbyTicketId(req:AuthenticatedRequest, res: Response){
+export async function getPaymentsbyTicketId(req:AuthenticatedRequest, res: Response, next: NextFunction){
 
     const idTicket = Number(req.query.ticketId);
     const {userId} = req;
@@ -21,12 +21,12 @@ export async function getPaymentsbyTicketId(req:AuthenticatedRequest, res: Respo
 }
 
     catch(e){
-        return res.sendStatus(500);
+        next(e);
     }
 
 }
 
-export async function postPaymentProcess(req: AuthenticatedRequest, res:Response){
+export async function postPaymentProcess(req: AuthenticatedRequest, res:Response, next: NextFunction){
     const {userId} = req;
   const { ticketId, cardData } = req.body;
 
@@ -40,6 +40,6 @@ export async function postPaymentProcess(req: AuthenticatedRequest, res:Response
     return res.status(httpStatus.OK).send(payment);
   }
   catch(e){
-    return res.sendStatus(500);
+    next(e);
   }
 }
