@@ -1,3 +1,4 @@
+import { Ticket } from '@prisma/client';
 import { TicketType } from '@prisma/client';
 import { notFoundError } from '@/errors';
 import enrollmentRepository from '@/repositories/enrollment-repository';
@@ -40,7 +41,10 @@ export async function getTickettickettype(id: number){
       }})
 }
 
-export async function createTicketonDB(ticket: any){
+type parainserirticket = Omit<Ticket, 'id' | 'createdAt' | 'updatedAt'>;
+
+
+export async function createTicketonDB(ticket: parainserirticket){
     return prisma.ticket.create({
         data: ticket
       });

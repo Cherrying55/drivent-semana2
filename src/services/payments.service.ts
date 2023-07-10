@@ -3,6 +3,7 @@ import { prisma } from "@/config";
 import { getTickettickettype, getTickeyById, processarPagamento } from "./tickets.service";
 import { notFoundError, unauthorizedError } from "@/errors";
 import enrollmentRepository from "@/repositories/enrollment-repository";
+import { Payment } from "@prisma/client";
 
 export  async function getPaymentById(id: number) {
   return prisma.payment.findFirst({
@@ -40,7 +41,9 @@ export async function getPaymentsbyTicketId(idUser: number, idTicket: number){
 
 }
 
-export async function createPaymentonDB(id: number, dados: any) {
+type parametroscriacao = Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>;
+
+export async function createPaymentonDB(id: number, dados: parametroscriacao) {
     return prisma.payment.create({
       data: {
         id,

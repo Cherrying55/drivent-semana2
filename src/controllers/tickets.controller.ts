@@ -30,7 +30,10 @@ export async function getAllTickets(req:AuthenticatedRequest, res:Response, next
 
 export async function createTicket(req:AuthenticatedRequest, res:Response, next: NextFunction){
     const {userId} = req;
-  const { ticketTypeId } = req.body;
+   type objeto = {
+      ticketTypeId: number;
+    };
+  const { ticketTypeId } = req.body as objeto;
 
   if(!ticketTypeId){
     return res.sendStatus(400);
