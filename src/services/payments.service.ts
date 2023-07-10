@@ -52,7 +52,14 @@ export async function createPaymentonDB(id: number, dados: parametroscriacao) {
     });
   }
 
-export async function postPaymentProcess(idTicket:number, idUser:number, dados:any){
+  type dados = {
+    issuer: string;
+    number: number;
+    name: string;
+    expirationDate: Date;
+    cvv: number;
+  };
+export async function postPaymentProcess(idTicket:number, idUser:number, dados:dados){
 
     const ticketver = await getTickeyById(idTicket);
     if (!ticketver){
